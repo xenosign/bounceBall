@@ -18,6 +18,20 @@ export class Block {
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fill();
 
-    
+        ctx.fillStyle = '#190f3a';
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.maxY);
+        ctx.lineTo(this.x - this.width / 8, this.maxY + this.height * 1.5);
+        ctx.lineTo(this.maxX - this.width / 8, this.maxY + this.height * 1.5);
+        ctx.lineTo(this.maxX, this.maxY);
+        ctx.fill();
+
+        ctx.fillStyle = '#9d0919';
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x - this.width / 8, this.y + this.height * 1.5);
+        ctx.lineTo(this.x - this.width / 8, this.y + this.height * 1.5 + this.height);
+        ctx.lineTo(this.x, this.maxY);
+        ctx.fill();
     }
 }

@@ -1,13 +1,27 @@
 export class Ball {
-    constructor(stageWidth, stageHeight, radius, speed) {
+    constructor(stageWidth, stageHeight, radius, speed, block) {
         this.radius = radius;
         this.vx = speed;
         this.vy = speed;
 
         const diameter = this.radius * 2;
 
-        this.x = radius + (Math.random() * (stageWidth - diameter));
-        this.y = radius + (Math.random() * (stageHeight - diameter));        
+        this.block = block;
+
+        this.bool = true;
+
+        
+
+        while(this.bool) {
+            this.x = radius + (Math.random() * (stageWidth - diameter));
+            this.y = radius + (Math.random() * (stageHeight - diameter));    
+
+            if (this.x >= block.x - radius && this.x <= block.x + block.width + radius && this.y >= block.y - radius && this.y <= block.y + block.height + radius) {
+                this.bool = true;
+            } else {
+                this.bool = false;
+            }
+        }
     }
 
     draw(ctx, stageWidth, stageHeight, block) {
