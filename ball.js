@@ -6,15 +6,17 @@ export class Ball {
 
         const diameter = this.radius * 2;
 
-        this.x = diameter + (Math.random() * stageWidth - diameter);
-        this.y = diameter + (Math.random() * stageHeight - diameter);
+        this.x = radius + (Math.random() * (stageWidth - diameter));
+        this.y = radius + (Math.random() * (stageHeight - diameter));        
     }
 
-    draw(ctx, stageWidth, stageHeight) {
+    draw(ctx, stageWidth, stageHeight, block) {
         this.x += this.vx;
         this.y += this.vy;
-
+        
         this.bounceWindow(stageWidth, stageHeight);
+        
+        this.bounceBlock(block);
 
         ctx.fillStyle = '#fdd700';
         ctx.beginPath();
@@ -28,13 +30,43 @@ export class Ball {
         const minY = this.radius;
         const maxY = stageHeight - this.radius;
 
+        
         if (this.x <= minX || this.x >= maxX ) {
             this.vx *= -1;
             this.x += this.vx;            
         } else if (this.y <= minY || this.y >= maxY ) {
             this.vy *= -1;
             this.y += this.vy;
-        }
+        } 
+
         
+        
+    }
+
+    bounceBlock(block) {
+        const blockLeft = block.x - this.radius;
+        const blockRight = block.x + block.width + this.radius;
+        const blockTop = block.y - this.radius;
+        const blockBotttom = block.y + block.height + this.radius;
+        
+        
+        if (this.x >= blockLeft && this.x <= blockRight && this.y >= blockTop && this.y <= blockBotttom) {
+            const gapX1 = Math.abs(blockLeft - this.x);
+            const gapX2 = Math.abs(this.x - blockRight);
+            const gapY1 = Math.abs(blockTop - this.y);
+            const gapY2 = Math.abs(this.y - blockBotttom);
+            
+            const minX = Math.min(gapX1, gapX2);
+            const minY = Math.min(gapY1, gapY2);
+
+            if (minX < minY) {
+                this.vx *= -1;
+                this.x += this.vx;
+            } else {
+                this.vy *= -1;
+                this.y += this.vy;
+                
+            }
+        }
     }
 }
