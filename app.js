@@ -8,11 +8,11 @@ class App {
 
         document.body.appendChild(this.canvas);
 
-        window.addEventListener('resize', this.resize.bind(this), false);
-        this.resize();
-
         this.block = new Block(this.stageWidth, this.stageHeight);
         this.ball = new Ball(this.stageWidth, this.stageHeight, 60, 10, this.block);
+        
+        window.addEventListener('resize', this.resize.bind(this), false);
+        this.resize();
 
         window.requestAnimationFrame(this.animate.bind(this));
     }
@@ -24,6 +24,9 @@ class App {
         this.canvas.width = this.stageWidth * 2;
         this.canvas.height = this.stageHeight * 2;
         this.ctx.scale(2, 2);
+
+        this.block.resize(this.stageWidth, this.stageHeight);
+        this.ball.resize(this.stageWidth, this.stageHeight);
     }
 
     animate() {

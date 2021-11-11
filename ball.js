@@ -5,6 +5,7 @@ export class Ball {
         this.vy = speed;
 
         const diameter = this.radius * 2;
+        this.diameter = diameter;
 
         this.block = block;
 
@@ -23,6 +24,26 @@ export class Ball {
             }
         }
     }
+
+    resize(stageWidth, stageHeight) {
+        this.stageWidth = stageWidth;
+        this.stageHeight = stageHeight;
+
+        this.bool = true;
+        
+        while(this.bool) {
+            this.x = this.radius + (Math.random() * (stageWidth - this.diameter));
+            this.y = this.radius + (Math.random() * (stageHeight - this.diameter));    
+            
+            console.log("!");
+
+            if (this.x >= this.block.x - this.radius && this.x <= this.block.x + this.block.width + this.radius && this.y >= this.block.y - this.radius && this.y <= this.block.y + this.block.height + this.radius) {
+                this.bool = true;
+            } else {
+                this.bool = false;
+            }
+        }
+      }
 
     draw(ctx, stageWidth, stageHeight, block) {
         this.x += this.vx;
@@ -52,9 +73,6 @@ export class Ball {
             this.vy *= -1;
             this.y += this.vy;
         } 
-
-        
-        
     }
 
     bounceBlock(block) {
